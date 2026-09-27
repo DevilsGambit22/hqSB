@@ -29,6 +29,7 @@
 html,
 body{
   margin:0;
+  width:100%;
   min-height:100%;
   background:transparent !important;
 }
@@ -36,7 +37,7 @@ body{
 body{
   font-family:Inter,Arial,Helvetica,sans-serif;
   color:var(--white);
-  overflow-x:hidden;
+  overflow:hidden;
 }
 
 button,
@@ -56,9 +57,20 @@ a{
 .shell{
   width:100%;
   max-width:340px;
+
+  /*
+    The sidebar itself is now the
+    scrolling container.
+  */
+  height:100vh;
+  max-height:100vh;
+
   margin:0 auto;
+
   position:relative;
-  overflow:hidden;
+
+  overflow-x:hidden;
+  overflow-y:auto;
 
   border:1px solid rgba(215,170,69,.56);
   border-radius:20px;
@@ -81,13 +93,66 @@ a{
     inset 0 0 0 1px rgba(255,255,255,.025);
 
   isolation:isolate;
+
+  scrollbar-width:thin;
+  scrollbar-color:
+    var(--gold)
+    #090a0d;
+}
+
+/* CHROME / EDGE / SAFARI */
+
+.shell::-webkit-scrollbar{
+  width:7px;
+}
+
+.shell::-webkit-scrollbar-track{
+  background:
+    rgba(5,6,8,.96);
+
+  border-left:
+    1px solid
+    rgba(215,170,69,.12);
+}
+
+.shell::-webkit-scrollbar-thumb{
+  background:
+    linear-gradient(
+      180deg,
+      var(--gold2),
+      var(--gold),
+      var(--gold3)
+    );
+
+  border-radius:999px;
+
+  border:
+    1px solid
+    rgba(242,213,129,.25);
+
+  box-shadow:
+    0 0 8px
+    rgba(215,170,69,.32);
+}
+
+.shell::-webkit-scrollbar-thumb:hover{
+  background:
+    linear-gradient(
+      180deg,
+      #fff0b0,
+      var(--gold2),
+      #b9872d
+    );
 }
 
 /* subtle grid */
+
 .shell::before{
   content:"";
+
   position:absolute;
   inset:0;
+
   pointer-events:none;
 
   background:
@@ -114,8 +179,10 @@ a{
 }
 
 /* moving gold light */
+
 .shell::after{
   content:"";
+
   position:absolute;
 
   left:-60%;
@@ -134,22 +201,33 @@ a{
       transparent
     );
 
-  animation:lightSweep 8s ease-in-out infinite;
+  animation:
+    lightSweep
+    8s
+    ease-in-out
+    infinite;
 
   pointer-events:none;
+
   z-index:1;
 }
 
 @keyframes lightSweep{
+
   0%,
   58%{
-    transform:translateX(0) rotate(16deg);
+    transform:
+      translateX(0)
+      rotate(16deg);
   }
 
   82%,
   100%{
-    transform:translateX(330%) rotate(16deg);
+    transform:
+      translateX(330%)
+      rotate(16deg);
   }
+
 }
 
 /* ==============================
@@ -161,6 +239,7 @@ a{
   inset:0;
 
   pointer-events:none;
+
   overflow:hidden;
 
   z-index:0;
@@ -185,7 +264,8 @@ a{
   opacity:0;
 
   animation:
-    rise var(--d)
+    rise
+    var(--d)
     linear
     var(--delay)
     infinite;
@@ -228,11 +308,55 @@ a{
 
     opacity:0;
   }
+
 }
 
 .content{
   position:relative;
   z-index:2;
+}
+
+/* ==============================
+   GLOBAL HOVER SYSTEM
+============================== */
+
+.section,
+.staff-card,
+.duty,
+.check,
+.order,
+.tab,
+.return-button,
+.statusbar,
+.logo{
+  transition:
+    transform .22s ease,
+    border-color .22s ease,
+    background .22s ease,
+    box-shadow .22s ease,
+    color .22s ease,
+    filter .22s ease;
+}
+
+/*
+  Sections subtly lift outward.
+*/
+
+.section:hover{
+  position:relative;
+  z-index:5;
+
+  background:
+    linear-gradient(
+      90deg,
+      rgba(215,170,69,.025),
+      rgba(215,170,69,.055),
+      rgba(215,170,69,.025)
+    );
+
+  box-shadow:
+    inset 0 0 30px
+    rgba(215,170,69,.025);
 }
 
 /* ==============================
@@ -245,7 +369,7 @@ a{
   padding:
     22px
     14px
-    18px;
+    16px;
 
   text-align:center;
 
@@ -266,6 +390,22 @@ a{
 
   display:grid;
   place-items:center;
+
+  transition:
+    transform .28s ease,
+    filter .28s ease;
+}
+
+.emblem:hover{
+  transform:
+    translateY(-4px)
+    scale(1.035);
+
+  filter:
+    drop-shadow(
+      0 10px 18px
+      rgba(215,170,69,.18)
+    );
 }
 
 .orbit,
@@ -289,7 +429,8 @@ a{
     rgba(215,170,69,.18);
 
   animation:
-    spin 18s
+    spin
+    18s
     linear
     infinite;
 }
@@ -302,7 +443,8 @@ a{
     rgba(242,213,129,.25);
 
   animation:
-    spinReverse 10s
+    spinReverse
+    10s
     linear
     infinite;
 }
@@ -344,9 +486,21 @@ a{
     0 0 20px rgba(215,170,69,.12);
 
   animation:
-    hoverLogo 4.8s
+    hoverLogo
+    4.8s
     ease-in-out
     infinite;
+}
+
+.logo:hover{
+  border-color:
+    var(--gold2);
+
+  box-shadow:
+    0 18px 42px
+    rgba(0,0,0,.52),
+    0 0 30px
+    rgba(215,170,69,.3);
 }
 
 @keyframes hoverLogo{
@@ -363,10 +517,12 @@ a{
       translateY(-5px)
       scale(1.015);
   }
+
 }
 
 .eyebrow{
   font-size:9px;
+
   letter-spacing:2px;
 
   text-transform:uppercase;
@@ -377,7 +533,10 @@ a{
 }
 
 h1{
-  margin:5px 0 0;
+  margin:
+    5px
+    0
+    0;
 
   font-family:
     Georgia,
@@ -408,7 +567,8 @@ h1{
 
 .statusbar{
   margin:
-    14px auto
+    14px
+    auto
     0;
 
   display:flex;
@@ -445,6 +605,24 @@ h1{
   text-transform:uppercase;
 }
 
+.statusbar:hover{
+  transform:
+    translateY(-2px)
+    scale(1.025);
+
+  border-color:
+    rgba(242,213,129,.55);
+
+  background:
+    rgba(215,170,69,.11);
+
+  box-shadow:
+    0 8px 22px
+    rgba(0,0,0,.3),
+    0 0 15px
+    rgba(215,170,69,.1);
+}
+
 .dot{
   width:7px;
   height:7px;
@@ -458,7 +636,8 @@ h1{
     rgba(215,170,69,.8);
 
   animation:
-    pulse 1.8s
+    pulse
+    1.8s
     ease-in-out
     infinite;
 }
@@ -481,6 +660,133 @@ h1{
 
   font-variant-numeric:
     tabular-nums;
+}
+
+/* ==============================
+   RETURN TO ACFA OFFICIAL
+============================== */
+
+.return-wrap{
+  padding:
+    12px
+    14px
+    0;
+}
+
+.return-button{
+  position:relative;
+
+  display:flex;
+
+  width:100%;
+
+  align-items:center;
+  justify-content:center;
+
+  gap:8px;
+
+  padding:
+    10px
+    12px;
+
+  overflow:hidden;
+
+  border:
+    1px solid
+    rgba(215,170,69,.38);
+
+  border-radius:10px;
+
+  background:
+    linear-gradient(
+      180deg,
+      rgba(215,170,69,.12),
+      rgba(215,170,69,.055)
+    );
+
+  color:var(--gold2);
+
+  box-shadow:
+    0 7px 18px
+    rgba(0,0,0,.22);
+
+  font-size:10px;
+
+  font-weight:900;
+
+  letter-spacing:.75px;
+
+  text-transform:uppercase;
+}
+
+.return-button::before{
+  content:"←";
+
+  font-size:15px;
+
+  line-height:1;
+
+  transition:
+    transform .22s ease;
+}
+
+.return-button::after{
+  content:"";
+
+  position:absolute;
+
+  top:0;
+  left:-110%;
+
+  width:70%;
+  height:100%;
+
+  transform:
+    skewX(-18deg);
+
+  background:
+    linear-gradient(
+      90deg,
+      transparent,
+      rgba(255,242,194,.14),
+      transparent
+    );
+
+  transition:
+    left .45s ease;
+}
+
+.return-button:hover{
+  transform:
+    translateY(-3px)
+    scale(1.025);
+
+  border-color:
+    rgba(242,213,129,.8);
+
+  color:#fff3c3;
+
+  background:
+    linear-gradient(
+      180deg,
+      rgba(215,170,69,.2),
+      rgba(215,170,69,.09)
+    );
+
+  box-shadow:
+    0 12px 25px
+    rgba(0,0,0,.36),
+    0 0 20px
+    rgba(215,170,69,.13);
+}
+
+.return-button:hover::before{
+  transform:
+    translateX(-3px);
+}
+
+.return-button:hover::after{
+  left:145%;
 }
 
 /* ==============================
@@ -520,6 +826,19 @@ h1{
   font-weight:700;
 
   white-space:nowrap;
+
+  transition:
+    transform .22s ease,
+    text-shadow .22s ease;
+}
+
+.section:hover .section-title{
+  transform:
+    translateX(2px);
+
+  text-shadow:
+    0 0 13px
+    rgba(215,170,69,.2);
 }
 
 .rule{
@@ -601,12 +920,38 @@ h1{
     translateY(10px);
 
   animation:
-    cardIn .55s
+    cardIn
+    .55s
     ease
     forwards;
 
   animation-delay:
     var(--delay,0s);
+}
+
+.staff-card:hover{
+  z-index:4;
+
+  transform:
+    translateY(-4px)
+    scale(1.025) !important;
+
+  border-color:
+    rgba(242,213,129,.65);
+
+  background:
+    linear-gradient(
+      105deg,
+      rgba(215,170,69,.16),
+      transparent 55%
+    ),
+    rgba(24,27,32,.96);
+
+  box-shadow:
+    0 13px 27px
+    rgba(0,0,0,.42),
+    0 0 17px
+    rgba(215,170,69,.11);
 }
 
 .staff-card::after{
@@ -629,7 +974,8 @@ h1{
     translateX(-120%);
 
   animation:
-    cardSheen 5.5s
+    cardSheen
+    5.5s
     ease-in-out
     infinite;
 
@@ -675,6 +1021,23 @@ h1{
     rgba(242,213,129,.48);
 
   background:#0c0d10;
+
+  transition:
+    transform .22s ease,
+    border-color .22s ease,
+    box-shadow .22s ease;
+}
+
+.staff-card:hover .avatar{
+  transform:
+    scale(1.08);
+
+  border-color:
+    var(--gold2);
+
+  box-shadow:
+    0 0 14px
+    rgba(215,170,69,.2);
 }
 
 .name{
@@ -764,7 +1127,8 @@ h1{
     var(--gold2);
 
   animation:
-    spin .8s
+    spin
+    .8s
     linear
     infinite;
 }
@@ -818,6 +1182,21 @@ h1{
   cursor:pointer;
 }
 
+.tab:hover{
+  transform:
+    translateY(-2px)
+    scale(1.035);
+
+  color:var(--gold2);
+
+  background:
+    rgba(215,170,69,.09);
+
+  box-shadow:
+    0 6px 14px
+    rgba(0,0,0,.26);
+}
+
 .tab.active{
   color:#12100b;
 
@@ -833,6 +1212,16 @@ h1{
     rgba(0,0,0,.3);
 }
 
+.tab.active:hover{
+  color:#12100b;
+
+  box-shadow:
+    0 8px 17px
+    rgba(0,0,0,.34),
+    0 0 13px
+    rgba(215,170,69,.13);
+}
+
 .panel{
   display:none;
 }
@@ -841,13 +1230,16 @@ h1{
   display:block;
 
   animation:
-    panelIn .28s ease;
+    panelIn
+    .28s
+    ease;
 }
 
 @keyframes panelIn{
 
   from{
     opacity:0;
+
     transform:
       translateY(4px);
   }
@@ -908,6 +1300,25 @@ h1{
   font-size:7px;
 }
 
+.duty:hover{
+  transform:
+    translateX(4px)
+    translateY(-2px)
+    scale(1.015);
+
+  border-color:
+    rgba(242,213,129,.45);
+
+  background:
+    rgba(28,30,35,.95);
+
+  box-shadow:
+    0 9px 20px
+    rgba(0,0,0,.3),
+    -3px 0 14px
+    rgba(215,170,69,.07);
+}
+
 /* ==============================
    CHECKLIST
 ============================== */
@@ -957,10 +1368,47 @@ h1{
     rgba(242,213,129,.62);
 
   border-radius:3px;
+
+  transition:
+    transform .22s ease,
+    background .22s ease,
+    box-shadow .22s ease;
 }
 
 .check strong{
   color:var(--gold2);
+}
+
+.check:hover{
+  transform:
+    translateX(4px)
+    translateY(-2px)
+    scale(1.015);
+
+  border-color:
+    rgba(242,213,129,.48);
+
+  border-left-color:
+    var(--gold2);
+
+  background:
+    rgba(28,31,36,.96);
+
+  box-shadow:
+    0 9px 20px
+    rgba(0,0,0,.3);
+}
+
+.check:hover::before{
+  transform:
+    scale(1.12);
+
+  background:
+    rgba(215,170,69,.12);
+
+  box-shadow:
+    0 0 9px
+    rgba(215,170,69,.2);
 }
 
 /* ==============================
@@ -1033,6 +1481,45 @@ h1{
 
   background:
     rgba(215,170,69,.08);
+
+  transition:
+    transform .22s ease,
+    border-color .22s ease,
+    box-shadow .22s ease;
+}
+
+.order:hover{
+  transform:
+    translateX(4px)
+    translateY(-2px)
+    scale(1.015);
+
+  border-color:
+    rgba(242,213,129,.48);
+
+  background:
+    linear-gradient(
+      100deg,
+      rgba(215,170,69,.12),
+      transparent 62%
+    ),
+    rgba(27,30,35,.96);
+
+  box-shadow:
+    0 9px 20px
+    rgba(0,0,0,.3);
+}
+
+.order:hover::before{
+  transform:
+    scale(1.1);
+
+  border-color:
+    var(--gold2);
+
+  box-shadow:
+    0 0 10px
+    rgba(215,170,69,.17);
 }
 
 /* ==============================
@@ -1076,6 +1563,11 @@ h1{
     padding-right:11px;
   }
 
+  .return-wrap{
+    padding-left:11px;
+    padding-right:11px;
+  }
+
   .emblem{
     width:134px;
     height:134px;
@@ -1093,6 +1585,7 @@ h1{
 }
 
 /* accessibility */
+
 @media(prefers-reduced-motion:reduce){
 
   *,
@@ -1100,6 +1593,7 @@ h1{
   *::after{
     animation-duration:.001ms !important;
     animation-iteration-count:1 !important;
+    transition-duration:.001ms !important;
   }
 
 }
@@ -1162,6 +1656,24 @@ h1{
       </div>
 
     </header>
+
+    <!-- ==========================
+         RETURN TO ACFA
+    =========================== -->
+
+    <div class="return-wrap">
+
+      <a
+        class="return-button"
+        href="https://www.chess.com/club/and-chess-for-all-official"
+        target="_blank"
+        rel="noopener noreferrer">
+
+        Return to ACFA Official
+
+      </a>
+
+    </div>
 
     <!-- ==========================
          NEWEST STAFF
@@ -1271,7 +1783,7 @@ h1{
 
       </div>
 
-      <!-- NOTICES / ORDERS -->
+      <!-- ORDERS -->
 
       <div
         class="panel"
@@ -1329,12 +1841,6 @@ const API_BASE =
 
 /* ==================================================
    CONTENT.JSON
-
-   Expectations, checklist items, and notices
-   are loaded from content.json.
-
-   This means routine HQ updates do not require
-   editing this index.html file.
 ================================================== */
 
 async function loadHQContent(){
@@ -1355,12 +1861,6 @@ async function loadHQContent(){
     );
 
   try{
-
-    /*
-      Cache-busting prevents GitHub Pages
-      from showing an older content.json
-      after you update it.
-    */
 
     const response =
       await fetch(
@@ -1384,8 +1884,6 @@ async function loadHQContent(){
       await response.json();
 
 
-    /* EXPECTATIONS */
-
     const expectations =
       Array.isArray(
         content.expectations
@@ -1393,8 +1891,6 @@ async function loadHQContent(){
       ? content.expectations
       : [];
 
-
-    /* CHECKLIST */
 
     const checklist =
       Array.isArray(
@@ -1404,8 +1900,6 @@ async function loadHQContent(){
       : [];
 
 
-    /* NOTICES */
-
     const notices =
       Array.isArray(
         content.notices
@@ -1413,8 +1907,6 @@ async function loadHQContent(){
       ? content.notices
       : [];
 
-
-    /* DRAW EXPECTATIONS */
 
     expectationsList.innerHTML =
       expectations.length
@@ -1435,8 +1927,6 @@ async function loadHQContent(){
       `;
 
 
-    /* DRAW CHECKLIST */
-
     checklistList.innerHTML =
       checklist.length
 
@@ -1455,8 +1945,6 @@ async function loadHQContent(){
         </div>
       `;
 
-
-    /* DRAW NOTICES */
 
     noticeList.innerHTML =
       notices.length
@@ -1763,14 +2251,6 @@ async function getJSON(url){
 }
 
 
-/*
-  Chess.com divides club members into
-  weekly / monthly / all_time groups.
-
-  This combines them into one list
-  and removes duplicates.
-*/
-
 function flattenMembers(data){
 
   const allMembers = [
@@ -1901,20 +2381,6 @@ async function getProfile(
 
 /* ==================================================
    NEWEST STAFF
-
-   IMPORTANT:
-
-   This is intentionally a NEW MEMBER BOARD.
-
-   ACFA HQ is the staff club.
-
-   Therefore:
-
-   Newest HQ members
-   =
-   Newest Staff.
-
-   It does NOT filter administrators.
 ================================================== */
 
 async function loadStaff(){
@@ -1927,10 +2393,6 @@ async function loadStaff(){
 
   try{
 
-    /*
-      Get the HQ club member list.
-    */
-
     const membersData =
       await getJSON(
 
@@ -1941,13 +2403,6 @@ async function loadStaff(){
 
       );
 
-
-    /*
-      Combine all Chess.com member groups,
-      sort by HQ join timestamp,
-      newest first,
-      and take the first 5.
-    */
 
     const staff =
       flattenMembers(
@@ -1989,11 +2444,6 @@ async function loadStaff(){
     }
 
 
-    /*
-      Get avatars and Chess.com profile URLs
-      for each new HQ member.
-    */
-
     const profiles =
       await Promise.all(
 
@@ -2006,10 +2456,6 @@ async function loadStaff(){
 
       );
 
-
-    /*
-      Build the animated staff cards.
-    */
 
     grid.innerHTML =
       staff
